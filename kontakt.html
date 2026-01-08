@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt - ACHILL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        :root {
+            --navy-dark: #0A1628;
+            --navy-primary: #1A2F4F;
+            --navy-light: #2C4563;
+            --navy-muted: #3D546F;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --accent-blue: #4A90E2;
+            --accent-red: #E63946;
+            
+            --font-display: 'TT Norms', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-body: 'IBM Plex Serif', serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--white);
+            background-color: var(--off-white);
+            line-height: 1.7;
+        }
+        
+        /* Logo */
+        .logo-container {
+            position: fixed;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .logo-bar {
+            height: 60px;
+            
+        }
+        
+        .logo-bar.static {
+            background-color: var(--white);
+            width: 6px;
+        }
+        
+        .logo-bar.animated {
+            background-color: var(--accent-red);
+            animation: barWidthPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes barWidthPulse {
+            0%, 100% { width: 6px; opacity: 1; }
+            25% { width: 12px; opacity: 0.9; }
+            50% { width: 8px; opacity: 0.95; }
+            75% { width: 14px; opacity: 0.85; }
+        }
+        
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--white);
+            margin-left: var(--spacing-xs);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            z-index: 1000;
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        nav a {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition-fast);
+            opacity: 0.7;
+        }
+        
+        nav a:hover,
+        nav a.active {
+            opacity: 1;
+            color: var(--navy-primary);
+        }
+        
+        /* Hero */
+        .page-hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: calc(var(--spacing-xl) + 60px) var(--spacing-md) var(--spacing-xl);
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 100%);
+        }
+        
+        .page-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .page-hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: var(--spacing-xl) var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xl);
+        }
+        
+        /* Contact Info */
+        .contact-info h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .contact-info p {
+            color: var(--navy-muted);
+            margin-bottom: var(--spacing-lg);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background-color: var(--white);
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+        }
+        
+        .contact-item:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transform: translateX(4px);
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--navy-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .contact-item-content {
+            flex-grow: 1;
+        }
+        
+        .contact-item-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--navy-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+        }
+        
+        .contact-item-value {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--white);
+        }
+        
+        .contact-item-value a {
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        
+        .contact-item-value a:hover {
+            color: var(--accent-red);
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            background-color: var(--white);
+            padding: var(--spacing-lg);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        }
+        
+        .contact-form h3 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .form-group label {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: var(--spacing-sm);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--white);
+            background-color: var(--off-white);
+            border: 2px solid var(--off-white);
+            border-radius: 4px;
+            transition: var(--transition-fast);
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background-color: var(--white);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .submit-button {
+            width: 100%;
+            padding: 1.25rem;
+            background-color: var(--navy-primary);
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+        }
+        
+        .submit-button:hover {
+            background-color: var(--accent-red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .form-note {
+            font-size: 0.85rem;
+            color: var(--navy-muted);
+            margin-top: var(--spacing-sm);
+            font-style: italic;
+        }
+        
+        /* Availability Section */
+        .availability-section {
+            background-color: var(--white);
+            padding: var(--spacing-xl) var(--spacing-md);
+            text-align: center;
+        }
+        
+        .availability-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .availability-content h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .availability-content p {
+            color: var(--navy-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .page-hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .contact-info h2,
+            .availability-content h2 {
+                font-size: 2rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: var(--spacing-xs);
+                background-color: var(--off-white);
+                padding: var(--spacing-sm);
+                border-radius: 8px;
+            }
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo-container">
+        <div class="logo">
+            <div class="logo-bar static"></div>
+            <div class="logo-bar animated"></div>
+            <span class="logo-text">ACHILL</span>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="ueber-mich.html">Über mich</a>
+        <a href="leistungen.html">Leistungen</a>
+        <a href="insights.html">Insights</a>
+        <a href="arbeitsweise.html">Arbeitsweise</a>
+        <a href="kontakt.html" class="active">Kontakt</a>
+    </nav>
+    
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <!-- CONTENT EDITABLE -->
+            <h1>Lass uns sprechen</h1>
+            <p class="page-hero-subtitle">
+                Kaffee trinken. Fragen stellen. Möglichkeiten erkunden.
+            </p>
+            <!-- END CONTENT EDITABLE -->
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="contact-grid">
+            <!-- Contact Info -->
+            <div class="contact-info">
+                <!-- CONTENT EDITABLE: Contact Info -->
+                <h2>Wie Sie mich erreichen</h2>
+                <p>
+                    Jedes Projekt startet mit einem Gespräch. Kommen Sie auf einen Kaffee 
+                    vorbei – oder wir sprechen remote. Kein Pitch. Keine Verpflichtung. 
+                    Nur eine ehrliche Einschätzung, ob und wie ich helfen kann.
+                </p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">E-Mail</div>
+                            <div class="contact-item-value">
+                                <a href="mailto:stefan.schindele@gmail.com">stefan.schindele@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">Telefon</div>
+                            <div class="contact-item-value">
+                                <a href="tel:+436641616164">+43 664 1616164</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">🔗</div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">LinkedIn</div>
+                            <div class="contact-item-value">
+                                <a href="https://www.linkedin.com/in/stefan-schindele-wien" target="_blank">
+                                    stefan-schindele-wien
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-item-content">
+                            <div class="contact-item-label">Standort</div>
+                            <div class="contact-item-value">
+                                Wien, Österreich<br>
+                                <span style="font-size: 0.9rem; color: var(--navy-muted);">
+                                    (Aber gerne auch in Ihrer Stadt)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END CONTENT EDITABLE -->
+            </div>
+            
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <!-- CONTENT EDITABLE: Contact Form -->
+                <h3>Nachricht senden</h3>
+                
+                <!-- NOTE: This form needs backend configuration or service like Formspree -->
+                <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-Mail *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="company">Unternehmen</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Nachricht *</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Nachricht senden</button>
+                    
+                    <p class="form-note">
+                        * Pflichtfelder. Ihre Daten werden vertraulich behandelt.
+                    </p>
+                </form>
+                <!-- END CONTENT EDITABLE -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Availability Section -->
+    <section class="availability-section">
+        <div class="availability-content">
+            <!-- CONTENT EDITABLE -->
+            <h2>Verfügbarkeit</h2>
+            <p>
+                Ich bin offen für neue Projekte – sowohl für Interim Mandate (ab 3 Monate) 
+                als auch für fokussierte Strategieprojekte. Aktuell bin ich verfügbar für 
+                Starts ab Q1 2025.
+            </p>
+            <!-- END CONTENT EDITABLE -->
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer style="padding: 4rem 2rem; background-color: var(--navy-dark); color: var(--white); font-family: var(--font-display);">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr; gap: 4rem; align-items: start;">
+            <div>
+                <p style="opacity: 0.6; font-size: 0.9rem;">&copy; 2025 Achill. Alle Rechte vorbehalten.</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-weight: 600; margin-bottom: 1rem; font-size: 0.95rem;">Partner & Netzwerk</div>
+                <a href="https://strategieaustria.at" 
+                   target="_blank" 
+                   style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent-blue); text-decoration: none; font-size: 0.95rem; transition: var(--transition-fast);">
+                    strategieaustria.at →
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

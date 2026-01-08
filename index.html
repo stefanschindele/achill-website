@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACHILL - Strategische Markenentwicklung</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        /* TT Norms Font (fallback to similar fonts if not available) */
+        @font-face {
+            font-family: 'TT Norms';
+            src: local('Helvetica Neue'), local('Arial'), local('system-ui');
+            font-weight: 400;
+        }
+        
+        :root {
+            /* Color Palette */
+            --navy-dark: #0A1628;
+            --navy-primary: #1A2F4F;
+            --navy-light: #2C4563;
+            --navy-muted: #3D546F;
+            --gray-dark: #2D2D2D;
+            --gray-medium: #666666;
+            --gray-light: #E8E8E8;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --accent-blue: #4A90E2;
+            --accent-red: #E63946;
+            
+            /* Typography */
+            --font-display: 'TT Norms', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-body: 'IBM Plex Serif', serif;
+            
+            /* Spacing */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            /* Animation */
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--navy-dark);
+            background-color: var(--off-white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Logo Animation - UPDATED */
+        .logo-container {
+            position: fixed;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .logo-bar {
+            height: 60px;
+            transition: var(--transition-smooth);
+        }
+        
+        .logo-bar.static {
+            width: 6px;
+            background-color: var(--white);
+        }
+        
+        /* Red animated bar with WIDTH animation */
+        .logo-bar.animated {
+            background-color: var(--accent-red);
+            animation: barWidthPulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes barWidthPulse {
+            0%, 100% {
+                width: 6px;
+                opacity: 1;
+            }
+            25% {
+                width: 12px;
+                opacity: 0.9;
+            }
+            50% {
+                width: 8px;
+                opacity: 0.95;
+            }
+            75% {
+                width: 14px;
+                opacity: 0.85;
+            }
+        }
+        
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--white);
+            margin-left: var(--spacing-xs);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            z-index: 1000;
+            display: flex;
+            gap: var(--spacing-md);
+        }
+        
+        nav a {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy-dark);
+            text-decoration: none;
+            transition: var(--transition-fast);
+            opacity: 0.7;
+        }
+        
+        nav a:hover {
+            opacity: 1;
+            color: var(--navy-primary);
+        }
+        
+        /* Hero Section - NO LOGO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: var(--spacing-lg) var(--spacing-md);
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 144, 226, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            max-width: 1000px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-md);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+        
+        .hero-tagline {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 400;
+            color: var(--white);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-lg);
+            animation: fadeInUp 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+        
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--white);
+            opacity: 0.8;
+            max-width: 800px;
+            margin: 0 auto var(--spacing-lg);
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.6s forwards;
+            opacity: 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background-color: var(--accent-blue);
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition-smooth);
+            animation: fadeInUp 1s ease 0.8s forwards;
+            opacity: 0;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Section Base Styles */
+        section {
+            padding: var(--spacing-xl) var(--spacing-md);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: var(--spacing-lg);
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+        
+        /* Services Section */
+        .services {
+            background-color: var(--white);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .service-card {
+            padding: var(--spacing-lg);
+            background-color: var(--off-white);
+            border-left: 4px solid var(--navy-primary);
+            transition: var(--transition-smooth);
+        }
+        
+        .service-card:hover {
+            background-color: var(--white);
+            border-left-color: var(--accent-red);
+            transform: translateX(8px);
+            box-shadow: -8px 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        
+        .service-number {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--navy-primary);
+            opacity: 0.2;
+            line-height: 1;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .service-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .service-card p {
+            color: var(--navy-muted);
+            line-height: 1.8;
+        }
+        
+        /* NEW: Insights Section */
+        .insights {
+            background-color: var(--off-white);
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .insight-card {
+            padding: var(--spacing-md);
+            background-color: var(--white);
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .insight-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+        }
+        
+        .insight-date {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .insight-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.3;
+        }
+        
+        .insight-card p {
+            color: var(--navy-muted);
+            line-height: 1.7;
+            margin-bottom: var(--spacing-md);
+            flex-grow: 1;
+        }
+        
+        .insight-link {
+            color: var(--navy-primary);
+            font-family: var(--font-display);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition-fast);
+        }
+        
+        .insight-link:hover {
+            color: var(--accent-red);
+            gap: 0.75rem;
+        }
+        
+        /* References Section */
+        .references {
+            background-color: var(--white);
+            text-align: center;
+        }
+        
+        .references-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            align-items: center;
+        }
+        
+        .reference-logo {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+            background-color: var(--off-white);
+            border-radius: 8px;
+            transition: var(--transition-fast);
+            opacity: 0.6;
+        }
+        
+        .reference-logo:hover {
+            opacity: 1;
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .reference-logo-placeholder {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--navy-muted);
+            font-size: 1.2rem;
+        }
+        
+        .references-cta {
+            margin-top: var(--spacing-lg);
+        }
+        
+        .references-cta a {
+            color: var(--navy-primary);
+            font-family: var(--font-display);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent-red);
+            transition: var(--transition-fast);
+        }
+        
+        .references-cta a:hover {
+            color: var(--accent-red);
+        }
+        
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-primary) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .contact .section-title {
+            color: var(--white);
+        }
+        
+        .contact-intro {
+            font-size: 1.5rem;
+            margin-bottom: var(--spacing-lg);
+            opacity: 0.9;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+            max-width: 600px;
+            margin: var(--spacing-lg) auto;
+        }
+        
+        .contact-item {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 500;
+        }
+        
+        .contact-item a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+        
+        .contact-item a:hover {
+            color: var(--white);
+        }
+        
+        /* Footer */
+        footer {
+            padding: var(--spacing-lg) var(--spacing-md);
+            background-color: var(--navy-dark);
+            color: var(--white);
+            font-family: var(--font-display);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+            align-items: start;
+        }
+        
+        .footer-left p {
+            opacity: 0.6;
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+        
+        .footer-right {
+            text-align: right;
+        }
+        
+        .footer-network-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+            font-size: 0.95rem;
+        }
+        
+        .footer-network-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+        
+        .footer-network-link:hover {
+            color: var(--white);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --spacing-lg: 3rem;
+                --spacing-xl: 4rem;
+            }
+            
+            .logo-container {
+                top: var(--spacing-sm);
+                left: var(--spacing-sm);
+            }
+            
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-bar {
+                height: 48px;
+            }
+            
+            nav {
+                top: var(--spacing-sm);
+                right: var(--spacing-sm);
+                flex-direction: column;
+                gap: var(--spacing-xs);
+                background-color: var(--off-white);
+                padding: var(--spacing-sm);
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav a {
+                color: var(--navy-dark);
+                font-size: 0.9rem;
+            }
+            
+            .hero {
+                padding: var(--spacing-lg) var(--spacing-sm);
+                min-height: 90vh;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.25rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .services-grid,
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .references-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
+            }
+            
+            .contact-intro {
+                font-size: 1.2rem;
+            }
+            
+            .contact-item {
+                font-size: 1rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .footer-right {
+                text-align: left;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.1rem;
+            }
+            
+            .references-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Print Styles */
+        @media print {
+            .logo-container,
+            nav,
+            .cta-button {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo - Only top left -->
+    <div class="logo-container">
+        <div class="logo">
+            <div class="logo-bar static"></div>
+            <div class="logo-bar animated"></div>
+            <span class="logo-text">ACHILL</span>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav>
+        <a href="#ueber-mich">Über mich</a>
+        <a href="#leistungen">Leistungen</a>
+        <a href="#insights">Insights</a>
+        <a href="#arbeitsweise">Arbeitsweise</a>
+        <a href="#kontakt">Kontakt</a>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <!-- CONTENT EDITABLE: Hero Section -->
+            <h1>ACHILL</h1>
+            <p class="hero-tagline">Schwächen erkennen. Und Stärken.</p>
+            <p class="hero-description">
+                Strategische Markenentwicklung mit 20 Jahren Erfahrung 
+                und dem Know-how für AI-gestützte Innovation.<br>
+                Für Unternehmen im Wandel. Von der Analyse zur Umsetzung.
+            </p>
+            <!-- END CONTENT EDITABLE -->
+            <a href="#kontakt" class="cta-button">Lass uns sprechen</a>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="services" id="leistungen">
+        <!-- CONTENT EDITABLE: Services Section -->
+        <h2 class="section-title">Was ich biete</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-number">01</div>
+                <h3>Strategische Markenentwicklung</h3>
+                <p>
+                    Von der Brand-Architektur bis zum Corporate Design. 
+                    Mit der Erfahrung aus 7 Märkten und einem Fokus auf 
+                    nachhaltigen Markenwert.
+                </p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-number">02</div>
+                <h3>Strategische Kommunikation</h3>
+                <p>
+                    Employer Branding, Kampagnenstrategien, Stakeholder 
+                    Communications. Fundiert, messbar, wirkungsvoll.
+                </p>
+            </div>
+            
+            <div class="service-card">
+                <div class="service-number">03</div>
+                <h3>AI-Basierte Markenprozesse</h3>
+                <p>
+                    Effizienzgewinn durch intelligente Automation. 
+                    Modular, skalierbar, zukunftssicher.
+                </p>
+            </div>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+    </section>
+    
+    <!-- NEW: Insights Section -->
+    <section class="insights" id="insights">
+        <!-- CONTENT EDITABLE: Insights Section -->
+        <h2 class="section-title">Insights & Artikel</h2>
+        <div class="insights-grid">
+            <!-- Article Card 1 - EXAMPLE -->
+            <div class="insight-card">
+                <div class="insight-date">Dezember 2024</div>
+                <h3>5 Learnings from 20+ Years in Brand Management</h3>
+                <p>
+                    Was ich in zwei Jahrzehnten über erfolgreiche Markenführung 
+                    gelernt habe – und was heute noch genauso gilt wie damals.
+                </p>
+                <a href="https://www.linkedin.com/in/stefan-schindele-wien" 
+                   target="_blank" 
+                   class="insight-link">
+                    Auf LinkedIn lesen →
+                </a>
+            </div>
+            
+            <!-- Article Card 2 - PLACEHOLDER -->
+            <div class="insight-card">
+                <div class="insight-date">Coming Soon</div>
+                <h3>AI in der Markenkommunikation</h3>
+                <p>
+                    Wie intelligente Automation Markenprozesse verändert – 
+                    und wo der Mensch unverzichtbar bleibt.
+                </p>
+                <a href="#" class="insight-link">
+                    Demnächst verfügbar →
+                </a>
+            </div>
+            
+            <!-- Article Card 3 - PLACEHOLDER -->
+            <div class="insight-card">
+                <div class="insight-date">Coming Soon</div>
+                <h3>Brand Architecture in Transformationen</h3>
+                <p>
+                    Strategische Markenarchitektur als Grundlage für 
+                    erfolgreiche Transformationsprozesse.
+                </p>
+                <a href="#" class="insight-link">
+                    Demnächst verfügbar →
+                </a>
+            </div>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+    </section>
+    
+    <!-- References Section -->
+    <section class="references">
+        <!-- CONTENT EDITABLE: References Section -->
+        <h2 class="section-title">Projekte und Kunden</h2>
+        <div class="references-grid">
+            <!-- PLACEHOLDER: Replace with actual logo images -->
+            <div class="reference-logo">
+                <span class="reference-logo-placeholder">Logo 1</span>
+            </div>
+            <div class="reference-logo">
+                <span class="reference-logo-placeholder">Logo 2</span>
+            </div>
+            <div class="reference-logo">
+                <span class="reference-logo-placeholder">Logo 3</span>
+            </div>
+            <div class="reference-logo">
+                <span class="reference-logo-placeholder">Logo 4</span>
+            </div>
+            <div class="reference-logo">
+                <span class="reference-logo-placeholder">Logo 5</span>
+            </div>
+            <div class="reference-logo">
+                <span class="reference-logo-placeholder">Logo 6</span>
+            </div>
+        </div>
+        <div class="references-cta">
+            <a href="#case-studies">Ausgewählte Case Studies →</a>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+    </section>
+    
+    <!-- Contact Section -->
+    <section class="contact" id="kontakt">
+        <!-- CONTENT EDITABLE: Contact Section -->
+        <h2 class="section-title">Kaffee trinken. Fragen stellen. Möglichkeiten erkunden.</h2>
+        <p class="contact-intro">
+            Jedes Projekt startet mit einem Gespräch.<br>
+            Kommen Sie auf einen Kaffee vorbei – oder wir sprechen remote.
+        </p>
+        <div class="contact-details">
+            <div class="contact-item">
+                📧 <a href="mailto:stefan.schindele@gmail.com">stefan.schindele@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                📞 <a href="tel:+436641616164">+43 664 1616164</a>
+            </div>
+            <div class="contact-item">
+                🔗 <a href="https://www.linkedin.com/in/stefan-schindele-wien" target="_blank">LinkedIn</a>
+            </div>
+            <div class="contact-item">
+                📍 Wien, Österreich
+            </div>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-left">
+                <!-- CONTENT EDITABLE: Footer -->
+                <p>&copy; 2025 Achill. Alle Rechte vorbehalten.</p>
+                <!-- END CONTENT EDITABLE -->
+            </div>
+            <div class="footer-right">
+                <!-- CONTENT EDITABLE: Network Links -->
+                <div class="footer-network-title">Partner & Netzwerk</div>
+                <a href="https://strategieaustria.at" 
+                   target="_blank" 
+                   class="footer-network-link">
+                    strategieaustria.at →
+                </a>
+                <!-- END CONTENT EDITABLE -->
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

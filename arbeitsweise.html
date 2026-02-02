@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbeitsweise - ACHILL</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+        
+        :root {
+            --navy-dark: #0A1628;
+            --navy-primary: #1A2F4F;
+            --navy-light: #2C4563;
+            --navy-muted: #3D546F;
+            --white: #FFFFFF;
+            --off-white: #F8F9FA;
+            --accent-blue: #4A90E2;
+            --accent-red: #E63946;
+            --accent-magenta: #E6399B;
+            --accent-green: #10B981;
+            
+            --font-display: 'TT Norms', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            --font-body: 'IBM Plex Serif', serif;
+            
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-body);
+            color: var(--navy-dark);
+            background-color: var(--white);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Logo - NEW: Complete redesign with animated "l" in word */
+        .logo-container {
+            position: fixed;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background-color: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: 4px;
+        }
+        
+        /* Logo word "ACHILL" */
+        .logo-word {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--navy-dark);
+            display: flex;
+        }
+        
+        .logo-word span {
+            display: inline-block;
+        }
+        
+        /* Animated first "l" in ACHILL word - cycles through colors */
+        .logo-word .animated-l {
+            animation: letterColorCycle 8s ease-in-out infinite;
+        }
+        
+        @keyframes letterColorCycle {
+            0%, 100% { color: #E63946; } /* red */
+            25% { color: #E6399B; } /* magenta */
+            50% { color: #4A90E2; } /* blue */
+            75% { color: #10B981; } /* green */
+        }
+        
+        /* Separate bars "||" - synchronized with logo letter */
+        .logo-bars {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .logo-bar {
+            height: 60px;
+            transition: var(--transition-smooth);
+        }
+        
+        .logo-bar.static {
+            width: 6px;
+            background-color: var(--white);
+        }
+        
+        /* Animated bar - WIDTH + COLOR synchronized */
+        .logo-bar.animated {
+            animation: barPulseWithColor 8s ease-in-out infinite;
+        }
+        
+        @keyframes barPulseWithColor {
+            0%, 100% {
+                width: 6px;
+                background-color: #E63946; /* red */
+            }
+            25% {
+                width: 14px;
+                background-color: #E6399B; /* magenta */
+            }
+            50% {
+                width: 14px;
+                background-color: #4A90E2; /* blue */
+            }
+            75% {
+                width: 14px;
+                background-color: #10B981; /* green */
+            }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            z-index: 1000;
+            background-color: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: 4px;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: var(--spacing-md);
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav a {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--navy-dark);
+            text-decoration: none;
+            transition: var(--transition-fast);
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-red);
+            transition: var(--transition-fast);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Page */
+        .page-hero { background-color: var(--white);
+        }
+        
+        .page-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            color: var(--navy-dark);
+        }
+        
+        .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--spacing-md);
+            color: var(--navy-dark);
+        }
+        
+        .page-hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray-medium);
+            max-width: 800px;
+        }
+        
+        /* Process Steps */
+        .process-section { background-color: var(--off-white);
+        }
+        
+        .process-step {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            padding-bottom: var(--spacing-xl);
+            border-bottom: 2px solid var(--off-white);
+        }
+        
+        .process-step:last-child {
+            border-bottom: none;
+        }
+        
+        .step-number {
+            text-align: center;
+        }
+        
+        .step { background-color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+        }
+        
+        .step-number-text {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--navy-dark);
+        }
+        
+        .step-content { color: var(--navy-dark);
+            margin-bottom: var(--spacing-sm);
+            line-height: 1.2;
+        }
+        
+        .step-subtitle {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .step-content { color: var(--navy-dark);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        
+        .step { background-color: var(--white);
+            padding: var(--spacing-md);
+            border-radius: 8px;
+            margin: var(--spacing-md) 0;
+        }
+        
+        .step-activities h4 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .step-activities ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .step-activities li {
+            padding: var(--spacing-xs) 0;
+            color: var(--navy-muted);
+        }
+        
+        .step-activities li::before {
+            content: '→ ';
+            color: var(--accent-red);
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+        
+        .step { background-color: var(--white);
+            padding: var(--spacing-md);
+            border-left: 4px solid var(--accent-blue);
+            border-radius: 4px;
+        }
+        
+        .step-output strong {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--navy-primary);
+        }
+        
+        /* Formats Section */
+        .formats-section { background-color: var(--off-white);
+        }
+        
+        .formats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title { color: var(--navy-dark);
+            margin-bottom: var(--spacing-lg);
+            
+            letter-spacing: -0.02em;
+        }
+        
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-lg);
+        }
+        
+        .format-card {
+            padding: var(--spacing-lg);
+            background-color: var(--white);
+            border-radius: 8px;
+            transition: var(--transition-smooth);
+            border-top: 4px solid var(--navy-primary);
+        }
+        
+        .format-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+            border-top-color: var(--accent-red);
+        }
+        
+        .format-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--navy-dark);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .format-duration {
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            color: var(--accent-red);
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .format-card p {
+            color: var(--navy-muted);
+            margin-bottom: var(--spacing-md);
+            line-height: 1.7;
+        }
+        
+        .format-ideal {
+            padding: var(--spacing-sm);
+            background-color: var(--off-white);
+            border-radius: 4px;
+        }
+        
+        .format-ideal strong {
+            font-family: var(--font-display);
+            font-weight: 700;
+            color: var(--navy-dark);
+            display: block;
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        /* CTA Section */
+        .cta-section { background-color: var(--off-white);
+        }
+        
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .cta-section p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: var(--spacing-lg);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.25rem 3rem;
+            background-color: var(--accent-blue);
+            color: var(--navy-dark);
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: var(--transition-smooth);
+        }
+        
+        .cta-button:hover {
+            background-color: var(--white);
+            color: var(--navy-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-hero h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--spacing-md);
+            color: var(--navy-dark);
+        }
+            
+            .page-hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray-medium);
+            max-width: 800px;
+        }
+            
+            .process-step {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+            
+            .step-number-circle {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .step-number-text {
+                font-size: 2rem;
+            }
+            
+            .step-content h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+            
+            nav {
+            position: fixed;
+            top: var(--spacing-md);
+            right: var(--spacing-md);
+            z-index: 1000;
+            background-color: var(--white);
+            padding: var(--spacing-sm);
+            border-radius: 4px;
+        }
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    
+        /* Text color fixes - all content should be navy-dark */
+        .content,
+        .section-content,
+        .step-content,
+        .card-content,
+        .insight-card,
+        .service-card,
+        p,
+        li,
+        .text {
+            color: var(--navy-dark) !important;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--navy-dark) !important;
+        }
+        
+        .section-subtitle,
+        .subtitle {
+            color: var(--gray-medium) !important;
+        }
+    
+        /* Equal column tables */
+        table {
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        table td,
+        table th {
+            width: auto;
+        }
+    
+        /* Headlines always left-aligned */
+        h1, h2, h3, h4, h5, h6,
+        .page-title,
+        .section-title,
+        .page-hero h1 {
+            text-align: left !important;
+        }
+    
+        /* All content grids 2x2 */
+        .approach-cards,
+        .services-grid,
+        .steps-grid,
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+        }
+    
+        /* Ensure readable text everywhere */
+        body,
+        .page-hero,
+        .page-hero-content,
+        .page-hero h1,
+        .page-hero-subtitle,
+        section,
+        .content,
+        .card,
+        .approach-card,
+        .service-card,
+        .step,
+        p, li, span {
+            color: var(--navy-dark) !important;
+        }
+        
+        .section-title,
+        .page-title {
+            color: var(--navy-dark) !important;
+        }
+        
+        .section-subtitle,
+        .subtitle {
+            color: var(--gray-medium) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+        <!-- Logo -->
+    <div class="logo-container">
+        <div class="logo-word">
+            <span>Achi</span><span class="animated-l">l</span><span>l</span>
+        </div>
+        <div class="logo-bars">
+            <div class="logo-bar static"></div>
+            <div class="logo-bar animated"></div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+        <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="ueber-mich.html">Über mich</a></li>
+            <li><a href="leistungen.html">Leistungen</a></li>
+            <li><a href="insights.html">Insights</a></li>
+            <li><a href="arbeitsweise.html">Arbeitsweise</a></li>
+            <li><a href="kontakt.html">Kontakt</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <!-- CONTENT EDITABLE -->
+            <h1>Von der Diagnose zur Transformation</h1>
+            <p class="page-hero-subtitle">
+                Mein Ansatz: Strukturiert, aber flexibel. Analytisch, aber empathisch.
+            </p>
+            <!-- END CONTENT EDITABLE -->
+        </div>
+    </section>
+    
+    <!-- Process Steps -->
+    <section class="process-section">
+        <!-- CONTENT EDITABLE: Step 1 -->
+        <div class="process-step">
+            <div class="step-number">
+                <div class="step-number-circle">
+                    <span class="step-number-text">01</span>
+                </div>
+            </div>
+            <div class="step-content">
+                <h2>Schwächen erkennen</h2>
+                <p class="step-subtitle">Diagnose & Analyse</p>
+                <p>
+                    Jede Marke hat blinde Flecken. Ich finde sie – durch strukturierte Analyse, 
+                    ehrliche Gespräche, und einen Blick von außen, der keine Rücksicht auf 
+                    interne Politik nehmen muss.
+                </p>
+                
+                <div class="step-activities">
+                    <h4>Was ich mache:</h4>
+                    <ul>
+                        <li>Brand Audits & Markenanalyse</li>
+                        <li>Stakeholder Interviews (intern & extern)</li>
+                        <li>Markt- und Wettbewerbsanalyse</li>
+                        <li>Workshops mit Key-Stakeholdern</li>
+                        <li>Identifikation von Schwachstellen und Potenzialen</li>
+                    </ul>
+                </div>
+                
+                <div class="step-output">
+                    <strong>Output:</strong> Diagnose-Dokument mit klaren Findings, 
+                    Handlungsfeldern und ersten strategischen Empfehlungen
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+        
+        <!-- CONTENT EDITABLE: Step 2 -->
+        <div class="process-step">
+            <div class="step-number">
+                <div class="step-number-circle">
+                    <span class="step-number-text">02</span>
+                </div>
+            </div>
+            <div class="step-content">
+                <h2>Stärken definieren</h2>
+                <p class="step-subtitle">Strategie & Konzeption</p>
+                <p>
+                    Strategie ist Fokus. Ich definiere, wo die Marke hin soll – und was sie 
+                    dafür braucht. Klar, messbar, umsetzbar.
+                </p>
+                
+                <div class="step-activities">
+                    <h4>Was ich mache:</h4>
+                    <ul>
+                        <li>Strategieentwicklung (Brand, Kommunikation, Kampagne)</li>
+                        <li>Positionierungskonzepte</li>
+                        <li>Markenarchitektur-Modelle</li>
+                        <li>Roadmaps und Umsetzungspläne</li>
+                        <li>Stakeholder Alignment & Buy-in</li>
+                    </ul>
+                </div>
+                
+                <div class="step-output">
+                    <strong>Output:</strong> Strategiedokument mit Positionierung, 
+                    Markenarchitektur, Roadmap und konkreten Maßnahmen
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+        
+        <!-- CONTENT EDITABLE: Step 3 -->
+        <div class="process-step">
+            <div class="step-number">
+                <div class="step-number-circle">
+                    <span class="step-number-text">03</span>
+                </div>
+            </div>
+            <div class="step-content">
+                <h2>Transformation begleiten</h2>
+                <p class="step-subtitle">Umsetzung & Implementation</p>
+                <p>
+                    Strategie allein reicht nicht. Ich begleite die Umsetzung – entweder als 
+                    Interim Manager, der operativ führt, oder als strategischer Sparringspartner, 
+                    der den Prozess begleitet.
+                </p>
+                
+                <div class="step-activities">
+                    <h4>Was ich mache:</h4>
+                    <ul>
+                        <li>Umsetzungsbegleitung (operative oder strategisch)</li>
+                        <li>Team-Leadership (falls Interim)</li>
+                        <li>Change Management & interne Kommunikation</li>
+                        <li>Steuerung externer Partner (Agenturen, Designer)</li>
+                        <li>Erfolgsmessung & KPI-Tracking</li>
+                    </ul>
+                </div>
+                
+                <div class="step-output">
+                    <strong>Output:</strong> Erfolgreiche Implementierung der Strategie, 
+                    messbare Ergebnisse, nachhaltige Veränderung
+                </div>
+            </div>
+        </div>
+        <!-- END CONTENT EDITABLE -->
+    </section>
+    
+    <!-- Formats Section -->
+    <section class="formats-section">
+        <div class="formats-container">
+            <!-- CONTENT EDITABLE: Formats -->
+            <h2 class="section-title">Formate im Detail</h2>
+            
+            <div class="formats-grid">
+                <div class="format-card">
+                    <h3>Interim Management</h3>
+                    <div class="format-duration">3-12 Monate</div>
+                    <p>
+                        Ich übernehme für 3-12 Monate eine Rolle in Ihrem Team – z.B. als 
+                        Head of Brand, Head of Communications, oder Strategic Lead. Ich führe 
+                        Teams, treibe Projekte voran, und baue Strukturen auf.
+                    </p>
+                    <div class="format-ideal">
+                        <strong>Ideal für:</strong>
+                        Vakanz-Überbrückung, Transformationsphasen, Skalierungen, M&A-Integration
+                    </div>
+                </div>
+                
+                <div class="format-card">
+                    <h3>Strategieprojekte</h3>
+                    <div class="format-duration">6-16 Wochen</div>
+                    <p>
+                        Fokussierte Projekte mit klarem Scope und Deliverable. Von der Analyse 
+                        bis zum fertigen Strategiedokument. Ich arbeite eng mit Ihrem Team 
+                        zusammen und liefere konkrete Ergebnisse.
+                    </p>
+                    <div class="format-ideal">
+                        <strong>Ideal für:</strong>
+                        Brand Repositioning, Kommunikationsstrategien, Employer Branding, 
+                        AI Process Audits
+                    </div>
+                </div>
+                
+                <div class="format-card">
+                    <h3>Strategic Advisory</h3>
+                    <div class="format-duration">Laufend</div>
+                    <p>
+                        Laufende Beratung, Sparring, externe Perspektive. Ich bin Ihr Sounding 
+                        Board für strategische Entscheidungen – remote oder vor Ort, je nach Bedarf.
+                    </p>
+                    <div class="format-ideal">
+                        <strong>Ideal für:</strong>
+                        Ongoing Brand Leadership Support, Strategic Sounding Board, 
+                        Ad-hoc Expert Input, Krisenbegleitung
+                    </div>
+                </div>
+            </div>
+            <!-- END CONTENT EDITABLE -->
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <!-- CONTENT EDITABLE -->
+        <h2>Bereit für den ersten Schritt?</h2>
+        <p>Lass uns über Ihr Projekt sprechen.</p>
+        <a href="kontakt.html" class="cta-button">Kontakt aufnehmen</a>
+        <!-- END CONTENT EDITABLE -->
+    </section>
+    
+    <!-- Footer -->
+    <footer style="padding: 4rem 2rem; background-color: var(--white); color: var(--navy-dark); text-align: center; font-family: var(--font-display);">
+        <p style="opacity: 0.6;">&copy; 2025 Achill. Alle Rechte vorbehalten.</p>
+    </footer>
+</body>
+</html>

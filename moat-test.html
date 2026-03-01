@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Der Moat-Test - Stefan Schindele</title>
+    <meta name="description" content="Friction vs. Urteilsvermögen: Die zentrale Überlebensfrage der nächsten 24 Monate.">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --black: #000000;
+            --gray-dark: #404040;
+            --gray-light: #E8E8E8;
+            --white: #FFFFFF;
+            --sage: #8B9A7B;
+            --dark-red: #8B0000;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            --spacing: 2rem;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--black);
+            background: var(--white);
+            padding-top: 80px;
+        }
+        
+        /* Header Bar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-light);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--spacing);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+        
+        .logo-text .animated {
+            display: inline-block;
+            animation: colorShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes colorShift {
+            0%, 100% { color: var(--sage); }
+            50% { color: var(--dark-red); }
+        }
+        
+        .logo-bars {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .logo-bar {
+            height: 40px;
+            width: 4px;
+            background: var(--black);
+        }
+        
+        .logo-bar.animated {
+            animation: barShift 8s ease-in-out infinite;
+        }
+        
+        @keyframes barShift {
+            0%, 100% { background: var(--sage); width: 4px; }
+            50% { background: var(--dark-red); width: 8px; }
+        }
+        
+        nav {
+            display: flex;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--black);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--sage);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem var(--spacing);
+        }
+        
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 3rem 0 1rem;
+            color: var(--black);
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--dark-red);
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+            color: var(--gray-dark);
+        }
+        
+        p strong {
+            color: var(--black);
+            font-weight: 600;
+        }
+        
+        .highlight-box {
+            background: var(--gray-light);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-left: 4px solid var(--dark-red);
+        }
+        
+        .highlight-box p {
+            margin-bottom: 0;
+        }
+        
+        .warning-box {
+            background: #FFF5F5;
+            border-left: 4px solid var(--dark-red);
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+        
+        ul {
+            margin: 1rem 0 1.5rem 2rem;
+            color: var(--gray-dark);
+        }
+        
+        ul li {
+            margin: 0.75rem 0;
+        }
+        
+        footer {
+            background: var(--gray-light);
+            padding: 3rem var(--spacing);
+            margin-top: 6rem;
+        }
+        
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        
+        .footer-section h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            font-size: 0.9rem;
+            color: var(--gray-dark);
+            text-decoration: none;
+            line-height: 1.8;
+            display: block;
+        }
+        
+        .footer-section a:hover {
+            color: var(--sage);
+        }
+        
+        .footer-bottom {
+            max-width: 900px;
+            margin: 2rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-dark);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray-dark);
+        }
+        
+        @media (max-width: 768px) {
+            header { flex-direction: column; height: auto; padding: 1rem; }
+            nav ul { flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+            body { padding-top: 200px; }
+            h1 { font-size: 2rem; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <span class="logo-text">Stefan Schindel<span class="animated">e</span></span>
+            <div class="logo-bars">
+                <div class="logo-bar"></div>
+                <div class="logo-bar animated"></div>
+            </div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="leistungen.html">Leistungen</a></li>
+                <li><a href="warum-jetzt.html">Warum jetzt</a></li>
+                <li><a href="moat-test.html">Moat-Test</a></li>
+                <li><a href="ueber-mich.html">Über mich</a></li>
+                <li><a href="kontakt.html">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main class="container">
+        <h1>Der Moat-Test:<br>Friction vs. Urteilsvermögen</h1>
+        
+        <p><strong>Ein Gedankenexperiment aus dem Jahr 2028, geschrieben heute.</strong></p>
+        
+        <p>Die zentrale Frage für jedes Unternehmen in den nächsten 24 Monaten: Wovon lebt Ihr Wert? Von Friction – oder von Urteilsvermögen?</p>
+        
+        <div class="warning-box">
+            <p><strong>Die Unterscheidung entscheidet über Überleben.</strong> Wer von Reibung lebt, ist gefährdet. Wer von echtem Urteilsvermögen, Vertrauen und Kontext lebt, hat eine Zukunft.</p>
+        </div>
+        
+        <h2>Das Szenario: Ghost GDP</h2>
+        
+        <p>AI-Agenten übernehmen Schritt für Schritt White-Collar-Jobs. Unternehmen sparen Lohnkosten, investieren das Geld in mehr AI, die wiederum weitere Jobs ersetzt – ein negativer Feedback-Loop ohne natürliche Bremse.</p>
+        
+        <p>Das Ergebnis: <strong>"Ghost GDP"</strong> – Produktivität steigt auf dem Papier, aber das Geld zirkuliert nicht mehr durch die Realwirtschaft. Maschinen sind keine Konsumenten.</p>
+        
+        <p>In diesem Szenario fällt der S&P 38% von seinem Peak. Arbeitslosigkeit erreicht 10,2%. Nicht weil die Technologie versagt – sondern weil sie funktioniert.</p>
+        
+        <h2>Was stirbt zuerst?</h2>
+        
+        <h3>SaaS kollabiert</h3>
+        <p>Agentic Coding macht In-House-Entwicklung plötzlich zur echten Alternative. Preisverhandlungen kippen zugunsten der Käufer. Das Geschäftsmodell "recurring revenue forever" war auf die Annahme gebaut, dass Kunden keine Wahl haben.</p>
+        
+        <h3>Intermediation stirbt</h3>
+        <p>Alles, was von menschlicher Trägheit, Inertia oder Informationsasymmetrie gelebt hat, verliert seinen Moat:</p>
+        <ul>
+            <li>Travel Agents – Agenten buchen besser</li>
+            <li>Insurance Brokers – Vergleich wird automatisiert</li>
+            <li>Real Estate Agents – Discovery ohne menschliche Vermittlung</li>
+            <li>Payment-Prozessoren – Direktverbindungen werden trivial</li>
+        </ul>
+        
+        <h3>Private Credit implodiert</h3>
+        <p>PE-backed Software-Deals, underwritten auf "ARR bleibt recurring" – die Annahme war falsch. Wenn Kunden kündigen können (und plötzlich können sie), bricht das Modell zusammen.</p>
+        
+        <h3>Der Hypothekenmarkt wackelt</h3>
+        <p>Prime-Borrower mit 780 FICO scores verlieren Jobs. Das Fundament des $13 Billionen Hypothekenmarkts wird hinterfragt: Sind diese Menschen wirklich kreditwürdig, wenn ihr Job von AI ersetzt werden kann?</p>
+        
+        <h2>Die zentrale Frage für Ihr Unternehmen</h2>
+        
+        <div class="highlight-box">
+            <p><strong>Welche Teile Ihres Angebots sind ehrlich gesagt Friction?</strong></p>
+            <p style="margin-top: 1rem;">Welche Teile sind echtes Urteilsvermögen, Erfahrung, Kontext, Vertrauen?</p>
+        </div>
+        
+        <p>Das ist keine theoretische Übung. Das ist die Überlebensfrage.</p>
+        
+        <h3>Was Friction ist:</h3>
+        <ul>
+            <li>Informationsasymmetrie ("Wir wissen es, Sie nicht")</li>
+            <li>Prozess-Komplexität ("Das ist kompliziert, lassen Sie uns das machen")</li>
+            <li>Tool-Gatekeeper ("Nur wir haben Zugang zu X")</li>
+            <li>Zeit als Währung ("Wir brauchen 40 Stunden dafür")</li>
+        </ul>
+        
+        <h3>Was Urteilsvermögen ist:</h3>
+        <ul>
+            <li>Strategische Einschätzung in ambiguen Situationen</li>
+            <li>Vertrauen, aufgebaut über Jahre</li>
+            <li>Kontext, der nicht dokumentiert ist</li>
+            <li>Die Fähigkeit zu sagen: "Das ist die falsche Frage"</li>
+        </ul>
+        
+        <h2>Was das für Sie bedeutet</h2>
+        
+        <p><strong>Wenn Sie primär von Friction leben:</strong> Sie haben 12-24 Monate, um Ihr Geschäftsmodell neu zu denken. Die Frage ist nicht ob, sondern wann.</p>
+        
+        <p><strong>Wenn Sie von Urteilsvermögen leben:</strong> Sie müssen es explizit machen. Klar kommunizieren. Verteidigen. Weil der Default ist: Alles wird als Friction behandelt, bis das Gegenteil bewiesen ist.</p>
+        
+        <p><strong>Wenn Sie beides haben:</strong> Trennen Sie es. Machen Sie klar, welcher Teil automatisiert werden kann (und sollte) – und welcher Teil Ihr eigentlicher Wert ist.</p>
+        
+        <h2>Wie ich helfe</h2>
+        
+        <p>Ich führe mit Ihnen den Moat-Test durch:</p>
+        
+        <ul>
+            <li>Wo ist Ihr Moat Friction, wo ist er Urteil?</li>
+            <li>Welche Teile Ihres Geschäfts überleben den AI-Shift?</li>
+            <li>Wie kommunizieren Sie Ihren Wert neu – bevor der Markt es für Sie tut?</li>
+            <li>Wie navigieren Sie die Transformation, wenn alles schneller wird?</li>
+        </ul>
+        
+        <p>Das sind keine 8-Wochen-Projekte mit definierten Deliverables. Das ist strategische Richtung in einem Moment fundamentaler Unsicherheit.</p>
+        
+        <div class="highlight-box">
+            <p><strong>Die Frage ist nicht: "Wird AI mein Geschäft verändern?"</strong></p>
+            <p style="margin-top: 1rem;">Die Frage ist: "Habe ich 24 Monate oder 24 Wochen?"</p>
+        </div>
+        
+        <p style="margin-top: 3rem;"><a href="kontakt.html" style="color: var(--dark-red); font-weight: 600; text-decoration: none;">Lassen Sie uns darüber sprechen →</a></p>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Stefan Schindele</h4>
+                <p>Integrated Marketing Leadership<br>Brand Performance & Strategy</p>
+                <p style="margin-top: 1rem;">Castellezgasse 21/5<br>1020 Wien, Österreich</p>
+            </div>
+            <div class="footer-section">
+                <h4>Kontakt</h4>
+                <a href="mailto:stefan.schindele@gmail.com">stefan.schindele@gmail.com</a>
+                <a href="tel:+436641616164">+43 664 1616164</a>
+                <a href="https://www.linkedin.com/in/stefan-schindele-wien" target="_blank">LinkedIn</a>
+            </div>
+            <div class="footer-section">
+                <h4>Netzwerk</h4>
+                <a href="https://www.strategieaustria.at" target="_blank">strategieaustria.at</a>
+                <a href="https://brand.a1.group" target="_blank">brand.a1.group</a>
+                <a href="https://www.saffron-consultants.com" target="_blank">saffron-consultants.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Stefan Schindele. Alle Rechte vorbehalten.</p>
+        </div>
+    </footer>
+</body>
+</html>

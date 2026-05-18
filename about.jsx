@@ -1,178 +1,76 @@
 /* ============================================================
    ABOUT.JSX — „Über mich"
-   Personal philosophy, approach, differentiators
+   Bio, Stations, Role
    ============================================================ */
 
 const ABOUT_DATA = {
   de: {
     label: "Über mich",
-    headline: "STEFAN SCHINDELE",
-    intro: "Unabhängiger Brand Advisor in Wien. Nach zwanzig Jahren in Konzernen — A1 Telekom Austria, Saffron Brand Consultants, Hutchison 3G — jetzt selbständig.",
-    philosophy: {
-      miniLabel: "Philosophie",
-      quote: "Schwächen kennen. Stärken erkennen. Dann strategisch darauf aufbauen.",
-      text: "Das ist nicht nur mein beruflicher Ansatz. Es ist, wie ich mit Menschen und Projekten umgehe. Nicht nur Fehler finden, sondern die beste Version erkennen und darauf aufbauen.",
-    },
-    whatSetsApart: {
-      miniLabel: "Was mich unterscheidet",
-      points: [
-        {
-          title: "OPERATIVE TIEFE",
-          text: "Nicht nur Strategie und Deck — sondern Konzept, erster Entwurf, laufender Prozess.",
-        },
-        {
-          title: "MARKE UND AI ZUSAMMEN",
-          text: "Beide Disziplinen nicht isoliert, sondern als integriertes Angebot. AI als Beschleuniger, nicht als Ersatz.",
-        },
-        {
-          title: "PRAGMATISMUS",
-          text: "Hemdsärmlig und ergebnisorientiert. Nicht theoretisch, sondern praktisch. Hands-on, wenn es darauf ankommt.",
-        },
-      ],
-    },
-    personal: {
-      miniLabel: "Persönlich",
-      text: "Nachts am produktivsten. Intensive Sprints statt lange Meetings. Direkt und informell. Kein Hype ohne Substanz.",
-    },
+    name: "stefan schindele",
+    role: "Brand Advisory mit operativer Tiefe.",
+    bio: "Über 20 Jahre Markenstrategie und Brand Systems für internationale Organisationen. Bei A1 Telekom Austria: Verantwortung für Markenstrategie und Markenführung über sieben Märkte — in einer Phase, in der sich der Markenwert von €900 Millionen auf €2,2 Milliarden entwickelte. Bei VIPnet, Drei Österreich und one: Marktlaunches, Repositionierungen, Aufbau skalierbarer Markenstrukturen.",
+    stationsLabel: "Stationen",
+    stations: [
+      { years: "2016 – 2024", role: "Domain Lead Brand Strategy, Brand Management & Marketing Communications", org: "A1 Telekom Austria Group" },
+      { years: "2013 – 2016", role: "Director Brand and Marketing Communication", org: "Vipnet (Kroatien)" },
+      { years: "2008 – 2013", role: "Client Service Director & Strategic Planner", org: "Saffron Brand Consultants" },
+      { years: "2004 – 2008", role: "Head of Communication", org: "Hutchison 3G Austria" },
+    ],
   },
   en: {
     label: "About",
-    headline: "STEFAN SCHINDELE",
-    intro: "Independent Brand Advisor based in Vienna. After twenty years in corporations — A1 Telekom Austria, Saffron Brand Consultants, Hutchison 3G — now independent.",
-    philosophy: {
-      miniLabel: "Philosophy",
-      quote: "Know your weaknesses. Recognize your strengths. Then build on them strategically.",
-      text: "This isn't just a professional approach. It's how I work with people and projects. Not just finding faults, but recognizing the best version and building on it.",
-    },
-    whatSetsApart: {
-      miniLabel: "What sets me apart",
-      points: [
-        {
-          title: "OPERATIONAL DEPTH",
-          text: "Not just strategy and decks — but concept, first draft, ongoing process.",
-        },
-        {
-          title: "BRAND AND AI TOGETHER",
-          text: "Both disciplines not in isolation, but as an integrated offering. AI as accelerator, not replacement.",
-        },
-        {
-          title: "PRAGMATISM",
-          text: "Hands-on and results-oriented. Not theoretical, but practical. In the trenches when it matters.",
-        },
-      ],
-    },
-    personal: {
-      miniLabel: "Personal",
-      text: "Most productive at night. Intensive sprints over long meetings. Direct and informal. No hype without substance.",
-    },
-  },
-};
-
-const aboutStyles = {
-  twoCol: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "var(--space-3xl)",
-    alignItems: "start",
-  },
-  quoteBlock: {
-    marginTop: "var(--space-3xl)",
-  },
-  pointsGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
-    gap: "var(--space-xl)",
-    marginTop: "var(--space-xl)",
-  },
-  point: {
-    borderTop: "1px solid var(--border)",
-    paddingTop: "var(--space-m)",
-  },
-  personalBlock: {
-    marginTop: "var(--space-5xl)",
-    maxWidth: "var(--prose-max)",
-  },
-  wordmarkRow: {
-    display: "flex",
-    gap: "var(--space-xl)",
-    marginTop: "var(--space-3xl)",
-    flexWrap: "wrap",
+    name: "stefan schindele",
+    role: "Brand advisory with operational depth.",
+    bio: "Over 20 years of brand strategy and brand systems for international organisations. At A1 Telekom Austria: responsibility for brand strategy and brand management across seven markets — in a phase in which the brand value developed from €900 million to €2.2 billion. At VIPnet, Drei Österreich and one: market launches, repositionings, building scalable brand structures.",
+    stationsLabel: "Stations",
+    stations: [
+      { years: "2016 – 2024", role: "Domain Lead Brand Strategy, Brand Management & Marketing Communications", org: "A1 Telekom Austria Group" },
+      { years: "2013 – 2016", role: "Director Brand and Marketing Communication", org: "Vipnet (Croatia)" },
+      { years: "2008 – 2013", role: "Client Service Director & Strategic Planner", org: "Saffron Brand Consultants" },
+      { years: "2004 – 2008", role: "Head of Communication", org: "Hutchison 3G Austria" },
+    ],
   },
 };
 
 function About({ lang }) {
   const t = ABOUT_DATA[lang];
-  const wordmarks = ["advisory", "concept", "design", "execution", "web"];
 
   return (
-    <section id="ueber" style={{ background: "var(--surface)" }}>
+    <section id="ueber">
       <div className="container">
-        <SectionLabel>{t.label}</SectionLabel>
-        <h2 className="headline headline-l">{t.headline}</h2>
+        <SectionDivider label={lang === "de" ? "über mich" : "about"} />
 
-        <p className="body-text" style={{
-          fontSize: "var(--text-l)",
-          color: "var(--fg-muted)",
-          marginTop: "var(--space-l)",
-          maxWidth: "var(--prose-max)",
-        }}>
-          {t.intro}
-        </p>
-
-        {/* Philosophy */}
-        <div style={aboutStyles.quoteBlock}>
-          <MiniLabel>{t.philosophy.miniLabel}</MiniLabel>
-          <div className="pull-quote" style={{ marginTop: "var(--space-m)" }}>
-            {t.philosophy.quote}
-          </div>
-          <p className="body-text" style={{
-            color: "var(--fg-muted)",
-            marginTop: "var(--space-l)",
-            maxWidth: "var(--prose-max)",
-          }}>
-            {t.philosophy.text}
-          </p>
+        {/* Name in Cordier */}
+        <div className="manifest" style={{ fontSize: "clamp(32px, 5vw, 56px)", textAlign: "center", marginBottom: "var(--space-m)" }}>
+          {t.name}
+        </div>
+        <div className="headline headline-s" style={{ textAlign: "center", color: "var(--scarlet)", marginBottom: "var(--space-3xl)", letterSpacing: "var(--tracking-wide)" }}>
+          {t.role}
         </div>
 
-        {/* What sets apart */}
-        <div style={{ marginTop: "var(--space-5xl)" }}>
-          <MiniLabel>{t.whatSetsApart.miniLabel}</MiniLabel>
-          <div style={aboutStyles.pointsGrid}>
-            {t.whatSetsApart.points.map((p, i) => (
-              <div key={i} style={aboutStyles.point}>
-                <div className="headline" style={{ fontSize: "var(--text-s)", marginBottom: "var(--space-s)" }}>
-                  {p.title}
-                </div>
-                <p className="body-text" style={{ color: "var(--fg-muted)", fontSize: "var(--text-s)" }}>
-                  {p.text}
-                </p>
-              </div>
-            ))}
-          </div>
+        {/* Bio */}
+        <div style={{ maxWidth: "var(--prose-max)", margin: "0 auto var(--space-5xl)" }}>
+          <p className="body-text" style={{ color: "var(--fg-muted)" }}>{t.bio}</p>
         </div>
 
-        {/* Wordmarks */}
-        <div style={aboutStyles.wordmarkRow}>
-          {wordmarks.map((w) => (
-            <div
-              key={w}
-              className="wordmark"
-              style={{
-                WebkitMaskImage: `url(assets/${w}.svg)`,
-                maskImage: `url(assets/${w}.svg)`,
-                height: "28px",
-                minWidth: "100px",
-              }}
-            />
+        {/* Stations */}
+        <SectionDivider label={t.stationsLabel.toLowerCase()} />
+
+        <div style={{ maxWidth: "var(--prose-max)", margin: "0 auto" }}>
+          {t.stations.map((s, i) => (
+            <div key={i} style={{
+              display: "grid",
+              gridTemplateColumns: "120px 1fr auto",
+              gap: "var(--space-l)",
+              padding: "var(--space-l) 0",
+              borderBottom: "1px solid var(--border)",
+              alignItems: "baseline",
+            }}>
+              <span className="manifest" style={{ fontSize: "var(--text-s)", color: "var(--scarlet)" }}>{s.years}</span>
+              <span style={{ fontWeight: 500 }}>{s.role}</span>
+              <span className="body-text" style={{ color: "var(--fg-muted)", fontSize: "var(--text-s)", textAlign: "right" }}>{s.org}</span>
+            </div>
           ))}
-        </div>
-
-        {/* Personal */}
-        <div style={aboutStyles.personalBlock}>
-          <MiniLabel>{t.personal.miniLabel}</MiniLabel>
-          <p className="body-text" style={{ color: "var(--fg-muted)", marginTop: "var(--space-m)" }}>
-            {t.personal.text}
-          </p>
         </div>
       </div>
     </section>

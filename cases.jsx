@@ -1,133 +1,72 @@
 /* ============================================================
    CASES.JSX — „Arbeiten"
-   Track record + case highlights
+   Three case studies from A1 context
    ============================================================ */
 
 const CASES_DATA = {
   de: {
     label: "Arbeiten",
-    headline: "ERFAHRUNG",
-    track: {
-      text: "Zwanzig Jahre. Sieben Märkte. Ein Ansatz.",
-      stats: [
-        { value: "€ 900 Mio → 2,2 Mrd", label: "Markenwert-Steigerung" },
-        { value: "7", label: "Märkte" },
-        { value: "20", label: "Jahre Erfahrung" },
-      ],
-    },
-    stations: [
+    title: "drei beispiele.",
+    lede: "Aus dem A1-Kontext. Weitere in Vorbereitung — diese drei stehen beispielhaft für die Arbeit.",
+    cases: [
       {
-        name: "A1 Telekom Austria Group",
-        role: "Group Brand Management",
-        scope: "Markenarchitektur, Brand Governance, AI Brand Support über sieben Märkte",
+        nr: "01",
+        tags: "AI-Automatisierung · Prozessdesign · Newsletter",
+        title: "Quarterly Results Newsletter",
+        subtitle: "Automatisierung eines unternehmensweiten Kommunikationsprozesses.",
+        metricBefore: "3 Wochen",
+        metricAfter: "3 Stunden",
       },
       {
-        name: "Saffron Brand Consultants",
-        role: "Brand Strategy",
-        scope: "Internationale Markenberatung — Strategie, Identität, Implementierung",
+        nr: "02",
+        tags: "AI-Automatisierung · Content-Produktion · Brand Voice",
+        title: "Social Media Content Generation",
+        subtitle: "Mehr Content. Gleicher Anlass. Automatisiert.",
+        metricBefore: "1 Posting",
+        metricAfter: "15+",
       },
       {
-        name: "Hutchison 3G / Drei",
-        role: "Brand & Communications",
-        scope: "Markenaufbau und Kommunikation für Mobilfunk-Launch in Österreich",
-      },
-      {
-        name: "Vipnet (A1 Kroatien)",
-        role: "Brand Management",
-        scope: "Rebranding und Markenintegration im kroatischen Markt",
+        nr: "03",
+        tags: "AI-Automatisierung · Brand Support · CI-Compliance",
+        title: "A1 Brand Chatbot",
+        subtitle: "Automatisierter Brand Support mit AI.",
+        metricBefore: "−70%",
+        metricAfter: "manuelle Anfragen",
       },
     ],
-    caseHighlight: {
-      miniLabel: "Fallbeispiel",
-      title: "AI BRAND SUPPORT",
-      client: "A1 Telekom Austria Group",
-      text: "Entwicklung eines AI-gestützten Brand Chatbots, der Brand-Design-Fragen automatisch beantwortet, hochgeladene Dokumente auf CI-Konformität prüft und benötigte Assets direkt bereitstellt. Reduktion manueller Brand-Anfragen, sofortige Verfügbarkeit rund um die Uhr.",
-    },
+    cta: "Case lesen",
   },
   en: {
-    label: "Work",
-    headline: "EXPERIENCE",
-    track: {
-      text: "Twenty years. Seven markets. One approach.",
-      stats: [
-        { value: "€ 900 M → 2.2 B", label: "Brand value growth" },
-        { value: "7", label: "Markets" },
-        { value: "20", label: "Years of experience" },
-      ],
-    },
-    stations: [
+    label: "Selected work",
+    title: "three examples.",
+    lede: "From the A1 context. More in preparation — these three stand representative of the practice.",
+    cases: [
       {
-        name: "A1 Telekom Austria Group",
-        role: "Group Brand Management",
-        scope: "Brand architecture, governance, AI brand support across seven markets",
+        nr: "01",
+        tags: "AI automation · Process design · Newsletter",
+        title: "Quarterly Results Newsletter",
+        subtitle: "Automating a group-wide communications process.",
+        metricBefore: "3 weeks",
+        metricAfter: "3 hours",
       },
       {
-        name: "Saffron Brand Consultants",
-        role: "Brand Strategy",
-        scope: "International brand consultancy — strategy, identity, implementation",
+        nr: "02",
+        tags: "AI automation · Content production · Brand voice",
+        title: "Social Media Content Generation",
+        subtitle: "More content. Same occasion. Automated.",
+        metricBefore: "1 post",
+        metricAfter: "15+",
       },
       {
-        name: "Hutchison 3G / Drei",
-        role: "Brand & Communications",
-        scope: "Brand building and communications for mobile launch in Austria",
-      },
-      {
-        name: "Vipnet (A1 Croatia)",
-        role: "Brand Management",
-        scope: "Rebranding and brand integration in the Croatian market",
+        nr: "03",
+        tags: "AI automation · Brand support · CI compliance",
+        title: "A1 Brand Chatbot",
+        subtitle: "Automated brand support with AI.",
+        metricBefore: "−70%",
+        metricAfter: "manual requests",
       },
     ],
-    caseHighlight: {
-      miniLabel: "Case",
-      title: "AI BRAND SUPPORT",
-      client: "A1 Telekom Austria Group",
-      text: "Development of an AI-powered brand chatbot that automatically answers brand design questions, checks uploaded documents for CI compliance, and provides required assets directly. Reduction of manual brand queries, instant 24/7 availability.",
-    },
-  },
-};
-
-const caseStyles = {
-  statsRow: {
-    display: "flex",
-    gap: "var(--space-3xl)",
-    marginTop: "var(--space-3xl)",
-    marginBottom: "var(--space-3xl)",
-  },
-  stat: {
-    flex: 1,
-    borderTop: "2px solid var(--scarlet)",
-    paddingTop: "var(--space-m)",
-  },
-  statValue: {
-    fontFamily: "var(--font-sans)",
-    fontSize: "var(--text-2xl)",
-    fontWeight: 400,
-    letterSpacing: "var(--tracking-tight)",
-    lineHeight: "var(--leading-tight)",
-  },
-  statLabel: {
-    fontFamily: "var(--font-sans)",
-    fontSize: "var(--text-xs)",
-    color: "var(--fg-muted)",
-    textTransform: "uppercase",
-    letterSpacing: "var(--tracking-wide)",
-    marginTop: "var(--space-xs)",
-  },
-  stationsGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "var(--space-xl)",
-    marginTop: "var(--space-xl)",
-  },
-  station: {
-    borderTop: "1px solid var(--border)",
-    paddingTop: "var(--space-m)",
-  },
-  caseBlock: {
-    marginTop: "var(--space-5xl)",
-    borderLeft: "2px solid var(--scarlet)",
-    paddingLeft: "var(--space-l)",
-    maxWidth: "var(--prose-max)",
+    cta: "Read case",
   },
 };
 
@@ -137,60 +76,49 @@ function Cases({ lang }) {
   return (
     <section id="arbeiten">
       <div className="container">
-        <SectionLabel>{t.label}</SectionLabel>
-        <h2 className="headline headline-l">{t.headline}</h2>
+        <SectionDivider label={lang === "de" ? "arbeiten" : "work"} />
 
-        {/* Lead */}
-        <p className="body-text" style={{
-          fontSize: "var(--text-l)",
-          color: "var(--fg-muted)",
-          marginTop: "var(--space-l)",
-          maxWidth: "var(--prose-max)",
-        }}>
-          {t.track.text}
+        <div className="manifest" style={{ fontSize: "clamp(32px, 5vw, 56px)", textAlign: "center", marginBottom: "var(--space-m)" }}>
+          {t.title}
+        </div>
+        <p className="body-text" style={{ textAlign: "center", color: "var(--fg-muted)", maxWidth: "var(--prose-max)", margin: "0 auto var(--space-5xl)" }}>
+          {t.lede}
         </p>
 
-        {/* Stats */}
-        <div style={caseStyles.statsRow}>
-          {t.track.stats.map((s, i) => (
-            <div key={i} style={caseStyles.stat}>
-              <div style={caseStyles.statValue}>{s.value}</div>
-              <div style={caseStyles.statLabel}>{s.label}</div>
+        {/* Case Cards */}
+        {t.cases.map((c, i) => (
+          <div key={i} style={{
+            borderLeft: "2px solid var(--scarlet)",
+            paddingLeft: "var(--space-l)",
+            marginBottom: "var(--space-3xl)",
+            maxWidth: "var(--prose-max)",
+            marginLeft: "auto",
+            marginRight: "auto",
+            background: "var(--surface)",
+            padding: "var(--space-xl) var(--space-xl) var(--space-xl) var(--space-xl)",
+            borderLeftWidth: "2px",
+            borderLeftStyle: "solid",
+            borderLeftColor: "var(--scarlet)",
+          }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "var(--space-m)", marginBottom: "var(--space-m)" }}>
+              <span className="manifest" style={{ fontSize: "var(--text-xl)", color: "var(--scarlet)" }}>{c.nr}</span>
+              <span className="mini-label">{c.tags}</span>
             </div>
-          ))}
-        </div>
-
-        {/* Stations */}
-        <MiniLabel>Stationen</MiniLabel>
-        <div style={caseStyles.stationsGrid}>
-          {t.stations.map((s, i) => (
-            <div key={i} style={caseStyles.station}>
-              <div className="headline" style={{ fontSize: "var(--text-s)", marginBottom: "var(--space-xs)" }}>
-                {s.name}
-              </div>
-              <div style={{ color: "var(--scarlet)", fontSize: "var(--text-s)", marginBottom: "var(--space-xs)" }}>
-                {s.role}
-              </div>
-              <p className="body-text" style={{ color: "var(--fg-muted)", fontSize: "var(--text-s)" }}>
-                {s.scope}
-              </p>
+            <h3 style={{ fontSize: "var(--text-xl)", color: "var(--scarlet)", fontWeight: 400, marginBottom: "var(--space-s)" }}>
+              {c.title}
+            </h3>
+            <p className="body-text" style={{ color: "var(--fg-muted)", marginBottom: "var(--space-l)" }}>
+              {c.subtitle}
+            </p>
+            {/* Metric */}
+            <div className="manifest" style={{ fontSize: "clamp(24px, 4vw, 40px)", marginBottom: "var(--space-l)" }}>
+              {c.metricBefore} <span style={{ color: "var(--fg-muted)" }}>→</span> <span className="accent">{c.metricAfter}</span>
             </div>
-          ))}
-        </div>
-
-        {/* Case Highlight */}
-        <div style={caseStyles.caseBlock}>
-          <MiniLabel>{t.caseHighlight.miniLabel}</MiniLabel>
-          <h3 className="headline headline-s" style={{ marginTop: "var(--space-m)" }}>
-            {t.caseHighlight.title}
-          </h3>
-          <div style={{ color: "var(--scarlet)", fontSize: "var(--text-s)", marginTop: "var(--space-xs)" }}>
-            {t.caseHighlight.client}
+            <a href="#" className="label underline-grow" style={{ color: "var(--scarlet)", letterSpacing: "var(--tracking-wide)" }}>
+              {t.cta} →
+            </a>
           </div>
-          <p className="body-text" style={{ color: "var(--fg-muted)", marginTop: "var(--space-m)" }}>
-            {t.caseHighlight.text}
-          </p>
-        </div>
+        ))}
       </div>
     </section>
   );

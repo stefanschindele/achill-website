@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stefan Schindele — Strategie bis zur Form</title>
+  <meta name="description" content="Unabhängiger Brand Advisor. Strategische Markenarbeit und AI-Automatisierung für DACH und CEE. Zwanzig Jahre Erfahrung.">
+  <meta name="author" content="Stefan Schindele">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Stefan Schindele — Strategie bis zur Form">
+  <meta property="og:description" content="Unabhängiger Brand Advisor. Strategische Markenarbeit und AI-Automatisierung.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stefan-schindele.com">
+
+  <!-- Fonts fallback -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="colors_and_type.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- React 18 UMD -->
+  <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+
+  <!-- Babel for in-browser JSX -->
+  <script src="https://unpkg.com/@babel/standalone@7.26.10/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    // Load JSX files in order, transform with Babel, execute
+    (async function() {
+      const files = ['offer.jsx', 'cases.jsx', 'about.jsx', 'app.jsx'];
+      for (const file of files) {
+        try {
+          const res = await fetch(file);
+          const jsx = await res.text();
+          const js = Babel.transform(jsx, { presets: ['react'] }).code;
+          const script = document.createElement('script');
+          script.textContent = js;
+          document.body.appendChild(script);
+        } catch(e) {
+          console.error('Failed to load ' + file, e);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
